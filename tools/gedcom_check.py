@@ -197,6 +197,38 @@ def fold(s):
     return "".join(c for c in s if c.isalnum() or c == " ").strip()
 
 
+# Portuguese (and common spelling) forms of German given names, so that a person
+# recorded in Germany and again in Brazil gets the same comparison key.
+GIVEN_EQUIV = {
+    "joao": "johann", "johannes": "johann", "hans": "johann",
+    "guilherme": "wilhelm", "henrique": "heinrich", "henrich": "heinrich",
+    "felipe": "philipp", "filipe": "philipp", "philip": "philipp", "phillip": "philipp",
+    "jorge": "georg", "frederico": "friedrich", "carlos": "karl", "carl": "karl",
+    "pedro": "peter", "jaco": "jakob", "jacob": "jakob", "jose": "joseph", "josef": "joseph",
+    "catarina": "katharina", "catharina": "katharina", "margarida": "margaretha",
+    "margaretta": "margaretha", "margarete": "margaretha", "isabel": "elisabeth",
+    "elisabetha": "elisabeth", "elizabeth": "elisabeth", "madalena": "magdalena",
+    "luiz": "ludwig", "luis": "ludwig", "adao": "adam", "cristiano": "christian",
+    "cristina": "christina", "ana": "anna", "francisco": "franz", "antonio": "anton",
+}
+
+
+def name_key(name):
+    parts = fold(name).split()
+    return " ".join(GIVEN_EQUIV.get(w, w) for w in parts)
+
+
+BRAZIL_WORDS = ("brasil", "brazil", "rio grande do sul", "santa catarina", "sao paulo", "parana",
+                "espirito santo", "rio de janeiro", "minas gerais", "petropolis", "joinville",
+                "blumenau", "sao leopoldo", "novo hamburgo", "nova friburgo", "brusque",
+                "santa cruz do sul", "domingos martins", "santa leopoldina", "santa isabel")
+
+
+def is_brazil(place):
+    p = fold(place)
+    return any(re.search(rf"\b{w}\b", p) for w in BRAZIL_WORDS)
+
+
 @dataclass
 class Event:
     tag: str
@@ -378,7 +410,7 @@ def check(people, fams):
     # Possible duplicates: same folded name, birth years within a small window.
     buckets = {}
     for p in people.values():
-        buckets.setdefault(fold(p.name), []).append(p)
+        buckets.setdefault(name_key(p.name), []).append(p)
     for name, group in buckets.items():
         if len(group) < 2 or not name:
             continue
@@ -432,11 +464,18 @@ def hints_for(event, kind):
             h.append(f"{kind}: civil register (Standesamt) — post-1874 Prussian civil "
                      "registration; older registers often in the Stadt-/Kreisarchiv or HHStAW")
         h.append("Local Ortsfamilienbuch (online-ofb.de / HFV) and LAGIS Hessen gazetteer for the parish")
-    if "brasil" in place or "brazil" in place:
-        if yr is None or yr < 1890:
-            h.append(f"{kind}: Catholic/Lutheran parish register (diocesan archive or IECLB)")
-        if yr is None or yr >= 1889:
-            h.append(f"{kind}: civil registry (Cartório de Registro Civil) of the municipality")
+    if is_brazil(event.place):
+        h.append(f"{kind}: Catholic parish register (Cúria diocesana) or Lutheran congregation "
+                 "book (IECLB/IELB)" + (" — Catholic baptisms often name all four grandparents"
+                                        if kind in ("birth", "baptism") else ""))
+        civil_from = 1890 if kind == "marriage" else 1889
+        if yr is None or yr >= civil_from:
+            h.append(f"{kind}: civil registry (Cartório de Registro Civil) — ask for a "
+                     "certidão de inteiro teor")
+        if kind in ("marriage", "death", "burial"):
+            h.append(f"{kind}: may name the German birthplace — check for 'natural de …'")
+        if kind in ("death", "burial"):
+            h.append("Probate (inventário) in the state court or state archive (e.g. APERS in RS)")
     if any(w in place for w in ("usa", "united states", "texas", "wisconsin", "ohio", "new york",
                                 "pennsylvania", "missouri", "illinois")):
         h.append(f"{kind}: state vital records, county courthouse, church records; "
@@ -467,6 +506,12 @@ def priorities(people, fams, findings, top=30):
             fam = fams.get(fid)
             if fam and fam.marriage:
                 hints += hints_for(fam.marriage, "marriage")
+        places = [e.place for e in p.events.values() if e.place]
+        if any(is_brazil(pl) for pl in places) and any(not is_brazil(pl) for pl in places):
+            hints.append("Immigrant to Brazil: Arquivo Nacional/SIAN (arrival lists, "
+                         "naturalisation 1823–1959), Museu da Imigração SP (1882–1958), APEES "
+                         "Projeto Imigrantes (Espírito Santo), state archives of the colony — "
+                         "see knowledge/sources-brazil.md")
         if p.events.get("EMIG") or p.events.get("IMMI"):
             hints.append("Emigration: HHStAW emigration files (LAGIS emigrant database), "
                          "Hamburg passenger lists, Bremen lists (passagierlisten.de), "

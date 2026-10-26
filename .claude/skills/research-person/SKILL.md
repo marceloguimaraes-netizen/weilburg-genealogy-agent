@@ -1,6 +1,6 @@
 ---
 name: research-person
-description: Research and validate one person or couple in the family tree using sources beyond FamilySearch (Archion, Matricula, Arcinsys/HHStAW, LAGIS, Ortsfamilienbücher, emigration and destination-country records). Use when the user names an ancestor to verify, asks "is this right?", "find more about …", or wants a research plan.
+description: Research and validate one person or couple in the family tree using sources beyond FamilySearch (Archion, Matricula, Arcinsys/HHStAW, LAGIS, Ortsfamilienbücher, Brazilian immigration, church and civil records). Use when the user names an ancestor to verify, asks "is this right?", "find more about …", or wants a research plan.
 ---
 
 # Research one person
@@ -21,6 +21,9 @@ an image, is **not proven**.
   villages changed parish and district).
 - Pick record types from `knowledge/sources-weilburg-nassau.md` by period, and order them:
   the records most likely to answer the open question come first, then the cheapest ones.
+- If the person lived in Brazil, use `knowledge/sources-brazil.md`: search under Portuguese
+  name forms too, and plan for the record that names the German village (marriage, Lutheran
+  book, naturalisation, inventário) before trying to jump to the German church book.
 - Include sources that confirm the person *indirectly*: siblings' baptisms (same parents),
   godparents, the parents' marriage, burial entries with age at death, emigration files,
   arrival records in the destination country.

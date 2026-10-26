@@ -48,13 +48,9 @@ Weilburg was the residence of the Nassau-Weilburg line, so court, administrative
 - **Bremen passenger lists** (passagierlisten.de) — most pre-1920 lists were destroyed; surviving ones 1920–1939.
 - **Antwerp / Le Havre** — many Nassauers left through these ports; arrival records in the destination country are usually the better source.
 
-## Brazil (if relevant)
+## Brazil
 
-- **Arquivo Nacional** (SIAN) — arrival lists for Rio de Janeiro, naturalisation.
-- **Museu da Imigração do Estado de São Paulo** — Hospedaria de Imigrantes registers and ship lists (digital collection).
-- **Arquivo Histórico de Petrópolis / Joinville / São Leopoldo** — German colonies with many Hesse/Nassau settlers.
-- **Hemeroteca Digital Brasileira** (Biblioteca Nacional) — newspapers, including German-language Brazilian papers.
-- **Cartórios de Registro Civil** — civil registration from 1889 (obligatory from 1890 onward); before that, parish registers (Catholic dioceses, Lutheran IECLB congregations).
+The family's destination — see **`knowledge/sources-brazil.md`** for the full guide.
 
 ## USA (if relevant)
 

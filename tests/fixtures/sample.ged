@@ -72,6 +72,15 @@
 1 NAME Loop /Two/
 1 FAMC @F4@
 1 FAMS @F3@
+0 @I12@ INDI
+1 NAME Guilherme /Weber/
+1 SEX M
+1 BIRT
+2 DATE ABT 1846
+2 PLAC Alemanha
+1 DEAT
+2 DATE 14 MAY 1910
+2 PLAC Joinville, Santa Catarina, Brasil
 0 @F1@ FAM
 1 HUSB @I1@
 1 WIFE @I2@

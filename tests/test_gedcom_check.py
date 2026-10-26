@@ -31,6 +31,17 @@ class DateTests(unittest.TestCase):
         self.assertIsNone(gc.parse_date(""))
 
 
+class NameAndPlaceTests(unittest.TestCase):
+    def test_name_key(self):
+        self.assertEqual(gc.name_key("João Felipe /Müller/"), gc.name_key("Johann Philipp Mueller"))
+        self.assertEqual(gc.name_key("Catarina Weber"), gc.name_key("Katharina Weber"))
+
+    def test_is_brazil(self):
+        self.assertTrue(gc.is_brazil("São Leopoldo, Rio Grande do Sul"))
+        self.assertTrue(gc.is_brazil("Petrópolis, RJ, Brasil"))
+        self.assertFalse(gc.is_brazil("Weilburg, Nassau, Deutschland"))
+
+
 class CheckTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -66,6 +77,18 @@ class CheckTests(unittest.TestCase):
         # 1801 predates the 1818 Nassau duplicate registers
         early = gc.hints_for(self.people["@I1@"].events["BIRT"], "birth")
         self.assertFalse(any("Hauptstaatsarchiv" in h for h in early))
+
+    def test_portuguese_namesake_flagged_as_duplicate(self):
+        self.assertTrue(self.has("possible_duplicate", "@I5@", "@I12@"))
+
+    def test_brazil_hints(self):
+        death = self.people["@I12@"].events["DEAT"]  # 1910, Joinville
+        hints = gc.hints_for(death, "death")
+        self.assertTrue(any("inteiro teor" in h for h in hints))
+        self.assertTrue(any("natural de" in h for h in hints))
+        self.assertFalse(any("Archion" in h for h in hints))
+        prio = {r["id"]: r for r in gc.priorities(self.people, self.fams, self.findings, 50)}
+        self.assertTrue(any("SIAN" in h for h in prio["@I12@"]["hints"]))
 
     def test_cli_writes_reports(self):
         import tempfile

@@ -1,0 +1,6 @@
+# Your tree and generated reports contain data on living people — keep them local.
+trees/*
+!trees/.gitkeep
+reports/
+__pycache__/
+*.pyc

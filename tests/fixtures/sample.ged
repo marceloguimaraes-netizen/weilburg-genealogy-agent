@@ -1,0 +1,97 @@
+0 HEAD
+1 CHAR UTF-8
+1 GEDC
+2 VERS 5.5.1
+0 @I1@ INDI
+1 NAME Johann Philipp /Weber/
+1 SEX M
+1 BIRT
+2 DATE 12 MAR 1801
+2 PLAC Weilburg, Nassau, Deutschland
+2 SOUR @S1@
+1 DEAT
+2 DATE 1870
+2 PLAC Weilburg, Hessen-Nassau, Preußen
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Anna Margaretha /Schmidt/
+1 SEX F
+1 BIRT
+2 DATE 1805
+2 PLAC Löhnberg, Nassau, Deutschland
+1 DEAT
+2 DATE 3 FEB 1840
+1 FAMS @F1@
+0 @I3@ INDI
+1 NAME Georg /Weber/
+1 SEX M
+1 BIRT
+2 DATE 5 JAN 1826
+2 PLAC Weilburg, Nassau, Deutschland
+1 FAMC @F1@
+1 FAMS @F2@
+0 @I4@ INDI
+1 NAME Katharina /Weber/
+1 SEX F
+1 BIRT
+2 DATE 20 JUN 1826
+1 FAMC @F1@
+0 @I5@ INDI
+1 NAME Wilhelm /Weber/
+1 SEX M
+1 BIRT
+2 DATE 1845
+2 PLAC Weilburg, Nassau, Deutschland
+1 EMIG
+2 DATE 1868
+2 PLAC Bremen
+1 FAMC @F1@
+0 @I6@ INDI
+1 NAME Johann Philipp /Wéber/
+1 SEX M
+1 BIRT
+2 DATE ABT 1802
+0 @I7@ INDI
+1 NAME Maria /Becker/
+1 SEX F
+1 BIRT
+2 DATE 1850
+1 DEAT
+2 DATE BEF 1840
+0 @I9@ INDI
+1 NAME Elisabeth /Müller/
+1 SEX F
+1 BIRT
+2 DATE 1827
+1 FAMS @F2@
+0 @I10@ INDI
+1 NAME Loop /One/
+1 FAMC @F3@
+1 FAMS @F4@
+0 @I11@ INDI
+1 NAME Loop /Two/
+1 FAMC @F4@
+1 FAMS @F3@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 MARR
+2 DATE 1824
+2 PLAC Weilburg, Nassau, Deutschland
+1 CHIL @I3@
+1 CHIL @I4@
+1 CHIL @I5@
+0 @F2@ FAM
+1 HUSB @I3@
+1 WIFE @I9@
+1 MARR
+2 DATE 1834
+0 @F3@ FAM
+1 HUSB @I11@
+1 CHIL @I10@
+0 @F4@ FAM
+1 HUSB @I10@
+1 CHIL @I11@
+0 @S1@ SOUR
+1 TITL Kirchenbuch Weilburg (ev.), Taufen 1790-1810
+0 TRLR
